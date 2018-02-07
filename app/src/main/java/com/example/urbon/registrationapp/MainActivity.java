@@ -9,20 +9,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
-    private DrawerLayout drawerLayout;
-    private Toolbar toolbar;
-    private NavigationView navigationView;
-    private ActionBarDrawerToggle drawerToggle;
+    @BindView(R.id.drawerLayout)
+    DrawerLayout drawerLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.navigationView)
+    NavigationView navigationView;
+
+    ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        drawerLayout = findViewById(R.id.drawerLayout);
-        toolbar = findViewById(R.id.toolbar);
-        navigationView = findViewById(R.id.navigationView);
+        ButterKnife.bind(this);
         drawerToggle = setUpDrawerToggle();
         drawerLayout.addDrawerListener(drawerToggle);
         setSupportActionBar(toolbar);
