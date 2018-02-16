@@ -79,7 +79,9 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(this, RegisterPetActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_second_fragment:
+            case R.id.customers:
+                intent = new Intent(this, CustomersActivity.class);
+                startActivity(intent);
                 break;
             case R.id.nav_third_fragment:
                 break;

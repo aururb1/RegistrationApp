@@ -7,12 +7,21 @@ import java.util.List;
  */
 
 public class Owner {
+    private String id;
     private String name;
     private String surname;
     private String phone;
     private String email;
     private String address;
     private List<Pet> pets;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

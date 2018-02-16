@@ -5,8 +5,8 @@
             android:id="@+id/registerPet"
             android:title="@string/register_pet" />
         <item
-            android:id="@+id/nav_second_fragment"
-            android:title="Second" />
+            android:id="@+id/customers"
+            android:title="@string/customers" />
         <item
             android:id="@+id/nav_third_fragment"
             android:title="Third" />
