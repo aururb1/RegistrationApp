@@ -19,4 +19,5 @@
     <string name="wrong_email_password">Wrong email or password!</string>
     <string name="empty_fields">There are empty fields!</string>
     <string name="customers">Customers</string>
+    <string name="signed_in">Trying to sign in</string>
 </resources>

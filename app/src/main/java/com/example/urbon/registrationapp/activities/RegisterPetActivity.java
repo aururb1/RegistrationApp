@@ -90,10 +90,9 @@ public class RegisterPetActivity extends AppCompatActivity
         owner.setEmail(ownerEmail.getText().toString());
         owner.setPhone(ownerPhone.getText().toString());
         owner.setAddress(ownerAdsress.getText().toString());
-        owner.setId(owner.getEmail());
         pets.add(pet);
         owner.setPets(pets);
-        databaseReference.child(owner.getId()).setValue(owner);
+        databaseReference.child(databaseReference.push().getKey()).setValue(owner);
         new CustomToasts(this).shortToast("customer added: " + owner.getName());
         startAnotherActivity();
     }
