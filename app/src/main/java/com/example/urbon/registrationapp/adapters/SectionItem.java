@@ -1,5 +1,6 @@
 package com.example.urbon.registrationapp.adapters;
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,11 +19,17 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 
 public class SectionItem extends AbstractSectionableItem<SectionItem.ViewHolder, HeaderItem> {
     private Pet pet;
+    private Activity activity;
 
-    public SectionItem(HeaderItem header, Pet pet) {
+    public SectionItem(HeaderItem header, Pet pet, Activity activity) {
         super(header);
         this.header = header;
         this.pet = pet;
+        this.activity = activity;
+    }
+
+    public Pet getPet() {
+        return pet;
     }
 
     @Override
@@ -53,6 +60,7 @@ public class SectionItem extends AbstractSectionableItem<SectionItem.ViewHolder,
     class ViewHolder extends FlexibleViewHolder {
 
         TextView petName;
+
         ViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             petName = view.findViewById(R.id.petName);

@@ -7,7 +7,7 @@ package com.example.urbon.registrationapp.models;
 public class Pet {
     private String name;
     private String type;
-    private int age;
+    private Integer age;
     private String breed;
 
     public String getName() {
@@ -26,11 +26,11 @@ public class Pet {
         this.type = type;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

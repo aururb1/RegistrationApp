@@ -19,6 +19,9 @@
         <activity android:name=".activities.RegisterPetActivity" />
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.CustomersActivity" />
+        <activity
+            android:name=".activities.InformationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

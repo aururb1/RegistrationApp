@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.urbon.registrationapp.R;
 import com.example.urbon.registrationapp.models.Owner;
@@ -48,7 +47,7 @@ public class RegisterPetActivity extends AppCompatActivity
     EditText ownerEmail;
     @BindView(R.id.ownerPhone)
     EditText ownerPhone;
-    @BindView(R.id.ownerAdsress)
+    @BindView(R.id.ownerAddress)
     EditText ownerAdsress;
     @BindView(R.id.save)
     Button save;

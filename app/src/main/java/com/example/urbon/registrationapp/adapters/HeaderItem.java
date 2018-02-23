@@ -1,6 +1,8 @@
 package com.example.urbon.registrationapp.adapters;
 
+import android.app.Activity;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.urbon.registrationapp.R;
@@ -22,6 +24,10 @@ public class HeaderItem extends AbstractHeaderItem<HeaderItem.HeaderItemHolder> 
 
     public HeaderItem(Owner owner) {
         this.owner = owner;
+    }
+
+    public Owner getOwner() {
+        return owner;
     }
 
     @Override
@@ -51,6 +57,7 @@ public class HeaderItem extends AbstractHeaderItem<HeaderItem.HeaderItemHolder> 
 
     class HeaderItemHolder extends FlexibleViewHolder {
 
+        LinearLayout linearLayout;
         TextView ownerFullName;
         TextView ownerEmail;
 
@@ -58,6 +65,7 @@ public class HeaderItem extends AbstractHeaderItem<HeaderItem.HeaderItemHolder> 
             super(view, adapter, true);
             ownerFullName = view.findViewById(R.id.ownerFullName);
             ownerEmail = view.findViewById(R.id.ownerEmail);
+            linearLayout = view.findViewById(R.id.linearLayout);
         }
     }
 

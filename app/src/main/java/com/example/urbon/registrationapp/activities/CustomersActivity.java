@@ -1,5 +1,6 @@
 package com.example.urbon.registrationapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.example.urbon.registrationapp.Const;
 import com.example.urbon.registrationapp.Firebase;
 import com.example.urbon.registrationapp.R;
 
@@ -20,6 +22,7 @@ import com.example.urbon.registrationapp.models.Pet;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +106,7 @@ public class CustomersActivity extends AppCompatActivity implements FlexibleAdap
             owner = children.getValue(Owner.class);
             HeaderItem header = new HeaderItem(owner);
             for (Pet pet : owner.getPets()) {
-                SectionItem sectionItem = new SectionItem(header, pet);
+                SectionItem sectionItem = new SectionItem(header, pet, this);
                 newItems.add(sectionItem);
             }
 
@@ -119,9 +122,18 @@ public class CustomersActivity extends AppCompatActivity implements FlexibleAdap
         progressBar.setVisibility(View.GONE);
     }
 
+
     @Override
     public boolean onItemClick(int position) {
-        AbstractFlexibleItem item = adapter.getCurrentItems().get(position);
+        Intent intent = new Intent(this, InformationActivity.class);
+        if (adapter.getItem(position) instanceof HeaderItem) {
+            HeaderItem item = (HeaderItem) adapter.getItem(position);
+            intent.putExtra(Const.OWNER, new Gson().toJson(item.getOwner()));
+        } else if (adapter.getItem(position) instanceof SectionItem) {
+            SectionItem item = (SectionItem) adapter.getItem(position);
+            intent.putExtra(Const.PET, new Gson().toJson(item.getPet()));
+        }
+        this.startActivity(intent);
         return false;
     }
 }
