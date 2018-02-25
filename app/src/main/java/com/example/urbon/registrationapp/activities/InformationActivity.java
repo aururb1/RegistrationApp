@@ -49,6 +49,24 @@ public class InformationActivity extends AppCompatActivity {
     EditText ownerPhone;
     @BindView(R.id.ownerAddress)
     EditText ownerAddress;
+    @BindView(R.id.namePetText)
+    TextView petNameText;
+    @BindView(R.id.petTypeText)
+    TextView petTypeText;
+    @BindView(R.id.petBreedText)
+    TextView petBreedText;
+    @BindView(R.id.petAgeText)
+    TextView petAgeText;
+    @BindView(R.id.ownerNameText)
+    TextView ownerNameText;
+    @BindView(R.id.ownerSurnameText)
+    TextView ownerSurnameText;
+    @BindView(R.id.ownerPhoneText)
+    TextView ownerPhoneText;
+    @BindView(R.id.ownerEmailText)
+    TextView ownerEmailText;
+    @BindView(R.id.ownerAddressText)
+    TextView ownerAddressText;
     @BindView(R.id.save)
     Button save;
 
@@ -95,6 +113,11 @@ public class InformationActivity extends AppCompatActivity {
         petType.setVisibility(View.GONE);
         petBreed.setVisibility(View.GONE);
         petAge.setVisibility(View.GONE);
+
+        petNameText.setVisibility(View.GONE);
+        petTypeText.setVisibility(View.GONE);
+        petBreedText.setVisibility(View.GONE);
+        petAgeText.setVisibility(View.GONE);
     }
 
     private void changeOwnerVisibility() {
@@ -104,6 +127,12 @@ public class InformationActivity extends AppCompatActivity {
         ownerPhone.setVisibility(View.GONE);
         ownerEmail.setVisibility(View.GONE);
         ownerAddress.setVisibility(View.GONE);
+
+        ownerNameText.setVisibility(View.GONE);
+        ownerSurnameText.setVisibility(View.GONE);
+        ownerPhoneText.setVisibility(View.GONE);
+        ownerEmailText.setVisibility(View.GONE);
+        ownerAddressText.setVisibility(View.GONE);
     }
 
     private void changeOwnerFieldsValues() {

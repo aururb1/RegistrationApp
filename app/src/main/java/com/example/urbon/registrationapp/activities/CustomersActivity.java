@@ -15,8 +15,8 @@ import com.example.urbon.registrationapp.Const;
 import com.example.urbon.registrationapp.Firebase;
 import com.example.urbon.registrationapp.R;
 
-import com.example.urbon.registrationapp.adapters.HeaderItem;
-import com.example.urbon.registrationapp.adapters.SectionItem;
+import com.example.urbon.registrationapp.items.HeaderItem;
+import com.example.urbon.registrationapp.items.SectionItem;
 import com.example.urbon.registrationapp.models.Owner;
 import com.example.urbon.registrationapp.models.Pet;
 import com.google.firebase.database.DataSnapshot;

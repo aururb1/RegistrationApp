@@ -1,4 +1,4 @@
-package com.example.urbon.registrationapp.adapters;
+package com.example.urbon.registrationapp.items;
 
 import android.app.Activity;
 import android.view.View;

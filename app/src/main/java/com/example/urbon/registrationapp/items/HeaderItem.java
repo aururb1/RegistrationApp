@@ -1,6 +1,5 @@
-package com.example.urbon.registrationapp.adapters;
+package com.example.urbon.registrationapp.items;
 
-import android.app.Activity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
