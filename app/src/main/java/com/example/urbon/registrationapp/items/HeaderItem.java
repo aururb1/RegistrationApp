@@ -20,13 +20,19 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 public class HeaderItem extends AbstractHeaderItem<HeaderItem.HeaderItemHolder> {
 
     private Owner owner;
+    private String path;
 
-    public HeaderItem(Owner owner) {
+    public HeaderItem(Owner owner, String path) {
         this.owner = owner;
+        this.path = path;
     }
 
     public Owner getOwner() {
         return owner;
+    }
+
+    public String getpath() {
+        return path;
     }
 
     @Override

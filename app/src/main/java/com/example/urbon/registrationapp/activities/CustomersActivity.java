@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.example.urbon.registrationapp.Const;
+import com.example.urbon.registrationapp.utils.Const;
 import com.example.urbon.registrationapp.Firebase;
 import com.example.urbon.registrationapp.R;
 
@@ -45,8 +45,7 @@ public class CustomersActivity extends AppCompatActivity implements FlexibleAdap
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    Firebase firebase;
-    List<Owner> owners = new ArrayList<>();
+    private Firebase firebase;
     private RecyclerView.LayoutManager layoutManager;
     private FlexibleAdapter<AbstractFlexibleItem> adapter;
 
@@ -67,6 +66,7 @@ public class CustomersActivity extends AppCompatActivity implements FlexibleAdap
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
+        finish();
         return true;
     }
 
@@ -100,15 +100,18 @@ public class CustomersActivity extends AppCompatActivity implements FlexibleAdap
                 .setStickyHeaders(true); //Make headers sticky
 
         List<AbstractFlexibleItem> newItems = new ArrayList<>();
-        owners = new ArrayList<>();
         Owner owner;
         for (DataSnapshot children : dataSnapshot.getChildren()) {
             owner = children.getValue(Owner.class);
-            HeaderItem header = new HeaderItem(owner);
-            for (Pet pet : owner.getPets()) {
-                SectionItem sectionItem = new SectionItem(header, pet, this);
+            HeaderItem header = new HeaderItem(owner, children.getKey());
+            for (int i = 0; i < owner.getPets().size(); i++) {
+                SectionItem sectionItem = new SectionItem(header, owner.getPets().get(i), children.getKey() + "/pets/" + i);
                 newItems.add(sectionItem);
             }
+//            for (Pet pet : owner.getPets()) {
+//                SectionItem sectionItem = new SectionItem(header, pet, children.getKey());
+//                newItems.add(sectionItem);
+//            }
 
         }
         adapter.onLoadMoreComplete(newItems);
@@ -129,9 +132,11 @@ public class CustomersActivity extends AppCompatActivity implements FlexibleAdap
         if (adapter.getItem(position) instanceof HeaderItem) {
             HeaderItem item = (HeaderItem) adapter.getItem(position);
             intent.putExtra(Const.OWNER, new Gson().toJson(item.getOwner()));
+            intent.putExtra(Const.PATH, item.getpath());
         } else if (adapter.getItem(position) instanceof SectionItem) {
             SectionItem item = (SectionItem) adapter.getItem(position);
             intent.putExtra(Const.PET, new Gson().toJson(item.getPet()));
+            intent.putExtra(Const.PATH, item.getPath());
         }
         this.startActivity(intent);
         return false;

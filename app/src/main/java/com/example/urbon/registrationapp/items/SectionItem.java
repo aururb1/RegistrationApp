@@ -19,17 +19,21 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 
 public class SectionItem extends AbstractSectionableItem<SectionItem.ViewHolder, HeaderItem> {
     private Pet pet;
-    private Activity activity;
+    private String path;
 
-    public SectionItem(HeaderItem header, Pet pet, Activity activity) {
+    public SectionItem(HeaderItem header, Pet pet, String path) {
         super(header);
         this.header = header;
         this.pet = pet;
-        this.activity = activity;
+        this.path = path;
     }
 
     public Pet getPet() {
         return pet;
+    }
+
+    public String getPath() {
+        return path;
     }
 
     @Override

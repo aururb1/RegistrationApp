@@ -21,4 +21,8 @@
     <string name="customers">Customers</string>
     <string name="signed_in">Trying to sign in</string>
     <string name="information">Information</string>
+    <string name="edit">edit</string>
+    <string name="no_phone_call">There is no app that support phone call</string>
+    <string name="no_sms_sending">There is no app that support sms sending</string>
+    <string name="no_email_sending">There is no app that support email sending</string>
 </resources>

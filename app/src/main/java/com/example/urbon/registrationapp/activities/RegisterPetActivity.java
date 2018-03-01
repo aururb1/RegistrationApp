@@ -48,7 +48,7 @@ public class RegisterPetActivity extends AppCompatActivity
     @BindView(R.id.ownerPhone)
     EditText ownerPhone;
     @BindView(R.id.ownerAddress)
-    EditText ownerAdsress;
+    EditText ownerAddress;
     @BindView(R.id.save)
     Button save;
 
@@ -88,7 +88,7 @@ public class RegisterPetActivity extends AppCompatActivity
         owner.setSurname(ownerSurname.getText().toString());
         owner.setEmail(ownerEmail.getText().toString());
         owner.setPhone(ownerPhone.getText().toString());
-        owner.setAddress(ownerAdsress.getText().toString());
+        owner.setAddress(ownerAddress.getText().toString());
         pets.add(pet);
         owner.setPets(pets);
         databaseReference.child(databaseReference.push().getKey()).setValue(owner);
@@ -99,5 +99,6 @@ public class RegisterPetActivity extends AppCompatActivity
     private void startAnotherActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 }

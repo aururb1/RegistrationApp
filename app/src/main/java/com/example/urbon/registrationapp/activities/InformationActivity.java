@@ -1,19 +1,25 @@
 package com.example.urbon.registrationapp.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.urbon.registrationapp.Const;
+import com.example.urbon.registrationapp.Firebase;
+import com.example.urbon.registrationapp.utils.Const;
 import com.example.urbon.registrationapp.R;
 import com.example.urbon.registrationapp.models.Owner;
 import com.example.urbon.registrationapp.models.Pet;
+import com.example.urbon.registrationapp.utils.CustomToasts;
 import com.google.gson.Gson;
 
 import butterknife.BindView;
@@ -23,7 +29,8 @@ import butterknife.ButterKnife;
  * Created by urbon on 2/19/2018.
  */
 
-public class InformationActivity extends AppCompatActivity {
+public class InformationActivity extends AppCompatActivity
+        implements View.OnClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -67,11 +74,25 @@ public class InformationActivity extends AppCompatActivity {
     TextView ownerEmailText;
     @BindView(R.id.ownerAddressText)
     TextView ownerAddressText;
-    @BindView(R.id.save)
-    Button save;
+    @BindView(R.id.edit)
+    Button edit;
+    @BindView(R.id.addFab)
+    FloatingActionButton addFab;
+    @BindView(R.id.callFab)
+    FloatingActionButton callFab;
+    @BindView(R.id.smsFab)
+    FloatingActionButton smsFab;
+    @BindView(R.id.mailFab)
+    FloatingActionButton mailFab;
 
     private Pet pet;
     private Owner owner;
+    private String path;
+    private Firebase firebase;
+    private Animation showAddFabButton;
+    private Animation hideAddFabButton;
+    private Animation showFabButtons;
+    private Animation hideFabButtons;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,6 +107,18 @@ public class InformationActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         getDataFromIntent(intent);
+        edit.setOnClickListener(this);
+        addFab.setOnClickListener(this);
+        smsFab.setOnClickListener(this);
+        callFab.setOnClickListener(this);
+        mailFab.setOnClickListener(this);
+
+        showAddFabButton = AnimationUtils.loadAnimation(this, R.anim.show_add_fab_button);
+        hideAddFabButton = AnimationUtils.loadAnimation(this, R.anim.hide_add_fab_button);
+        showFabButtons = AnimationUtils.loadAnimation(this, R.anim.show_fab_buttons);
+        hideFabButtons = AnimationUtils.loadAnimation(this, R.anim.hide_fab_buttons);
+
+        firebase = new Firebase(this);
     }
 
     @Override
@@ -105,6 +138,7 @@ public class InformationActivity extends AppCompatActivity {
             changeOwnerVisibility();
             changePetFieldsValues();
         }
+        path = intent.getStringExtra(Const.PATH);
     }
 
     private void changePetVisibility() {
@@ -141,12 +175,6 @@ public class InformationActivity extends AppCompatActivity {
         ownerPhone.setText(owner.getPhone());
         ownerEmail.setText(owner.getEmail());
         ownerAddress.setText(owner.getAddress());
-
-        ownerName.setEnabled(false);
-        ownerSurname.setEnabled(false);
-        ownerPhone.setEnabled(false);
-        ownerEmail.setEnabled(false);
-        ownerAddress.setEnabled(false);
     }
 
     private void changePetFieldsValues() {
@@ -154,10 +182,111 @@ public class InformationActivity extends AppCompatActivity {
         petType.setText(pet.getType());
         petBreed.setText(pet.getBreed());
         petAge.setText(String.valueOf(pet.getAge()));
+    }
 
-        petName.setEnabled(false);
-        petType.setEnabled(false);
-        petBreed.setEnabled(false);
-        petAge.setEnabled(false);
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.edit:
+                editOwnerPetInformation();
+                break;
+            case R.id.addFab:
+                hideShowOtherFabs();
+                break;
+            case R.id.callFab:
+                phoneCall();
+                break;
+            case R.id.smsFab:
+                smsMessage();
+                break;
+            case R.id.mailFab:
+                sendEmail();
+                break;
+        }
+    }
+
+    private void editOwnerPetInformation() {
+        if (owner != null) {
+            owner.setName(ownerName.getText().toString());
+            owner.setSurname(ownerSurname.getText().toString());
+            owner.setEmail(ownerEmail.getText().toString());
+            owner.setPhone(ownerPhone.getText().toString());
+            owner.setAddress(ownerAddress.getText().toString());
+            firebase.getDatabaseReference().child(path).setValue(owner);
+
+        } else {
+            pet.setName(petName.getText().toString());
+            pet.setBreed(petBreed.getText().toString());
+            pet.setType(petType.getText().toString());
+            pet.setAge(Integer.parseInt(petAge.getText().toString()));
+            firebase.getDatabaseReference().child(path).setValue(pet);
+        }
+        new CustomToasts(this).shortToast("Successfully changed");
+        startAnotherActivity();
+    }
+
+    private void startAnotherActivity() {
+        Intent intent = new Intent(this, CustomersActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void hideShowOtherFabs() {
+        if (smsFab.getVisibility() == View.VISIBLE) {
+            smsFab.setVisibility(View.GONE);
+            callFab.setVisibility(View.GONE);
+            mailFab.setVisibility(View.GONE);
+            smsFab.startAnimation(hideFabButtons);
+            callFab.startAnimation(hideFabButtons);
+            mailFab.startAnimation(hideFabButtons);
+            addFab.startAnimation(hideAddFabButton);
+        } else {
+            smsFab.setVisibility(View.VISIBLE);
+            callFab.setVisibility(View.VISIBLE);
+            mailFab.setVisibility(View.VISIBLE);
+            smsFab.startAnimation(showFabButtons);
+            callFab.startAnimation(showFabButtons);
+            mailFab.startAnimation(showFabButtons);
+            addFab.startAnimation(showAddFabButton);
+        }
+    }
+
+    private void phoneCall() {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + owner.getPhone()));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            new CustomToasts(this).longToast(getString(R.string.no_phone_call));
+        }
+    }
+
+    private void smsMessage() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + owner.getPhone()));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            new CustomToasts(this).longToast(getString(R.string.no_sms_sending));
+        }
+    }
+
+    private void sendEmail() {
+        String[] TO = {owner.getEmail()};
+//        String[] CC = {"xyz@gmail.com"};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("text/plain");
+
+
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+//        emailIntent.putExtra(Intent.EXTRA_CC, CC);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "");
+
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            finish();
+        } catch (android.content.ActivityNotFoundException ex) {
+            new CustomToasts(this).longToast(getString(R.string.no_email_sending));
+        }
     }
 }
