@@ -133,11 +133,17 @@ public class MainActivity extends AppCompatActivity
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.alert_dialog_calendar, null);
         dialogBuilder.setView(dialogView)
-                .setTitle("")
+                .setTitle("Register client")
                 .setCancelable(true)
                 .setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        floatingActionButtonAdd.startAnimation(hideRotateFab);
+                    }
+                })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
                         floatingActionButtonAdd.startAnimation(hideRotateFab);
                     }
                 });

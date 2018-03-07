@@ -53,10 +53,6 @@ public class Firebase {
         }
     }
 
-    public void getData() {
-
-    }
-
     public void signOut() {
         auth.signOut();
     }

@@ -5,16 +5,22 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.urbon.registrationapp.Firebase;
 import com.example.urbon.registrationapp.R;
 import com.example.urbon.registrationapp.models.Owner;
 import com.example.urbon.registrationapp.models.Pet;
 import com.example.urbon.registrationapp.utils.CustomToasts;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +59,8 @@ public class RegisterPetActivity extends AppCompatActivity
     Button save;
 
 
-    DatabaseReference databaseReference;
+    private Firebase firebase;
+    private List<Owner> ownerList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +72,31 @@ public class RegisterPetActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         save.setOnClickListener(this);
-        databaseReference = FirebaseDatabase.getInstance().getReference("z5bKBNMQj2POjbcEKjkeJ1AgOUJ3/owners");
+        firebase = new Firebase(this);
+        setAddValueEventListener();
+        ownerEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length() != 0){
+                    for(Owner owner: ownerList){
+                        if(owner.getEmail().equals(charSequence.toString())){
+                            new CustomToasts(RegisterPetActivity.this).shortToast("customer founded: " + charSequence);
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
@@ -91,7 +122,7 @@ public class RegisterPetActivity extends AppCompatActivity
         owner.setAddress(ownerAddress.getText().toString());
         pets.add(pet);
         owner.setPets(pets);
-        databaseReference.child(databaseReference.push().getKey()).setValue(owner);
+        firebase.getDatabaseReference().child(firebase.getDatabaseReference().push().getKey()).setValue(owner);
         new CustomToasts(this).shortToast("customer added: " + owner.getName());
         startAnotherActivity();
     }
@@ -100,5 +131,27 @@ public class RegisterPetActivity extends AppCompatActivity
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void setAddValueEventListener() {
+        firebase.getDatabaseReference().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                showData(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void showData(DataSnapshot dataSnapshot) {
+        ownerList = new ArrayList<>();
+        Owner owner;
+        for (DataSnapshot children : dataSnapshot.getChildren()) {
+            owner = children.getValue(Owner.class);
+            ownerList.add(owner);
+        }
     }
 }

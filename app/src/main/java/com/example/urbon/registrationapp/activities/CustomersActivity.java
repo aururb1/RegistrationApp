@@ -139,6 +139,7 @@ public class CustomersActivity extends AppCompatActivity implements FlexibleAdap
             intent.putExtra(Const.PATH, item.getPath());
         }
         this.startActivity(intent);
+        finish();
         return false;
     }
 }

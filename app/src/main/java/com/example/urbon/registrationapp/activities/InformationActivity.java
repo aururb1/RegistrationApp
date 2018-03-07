@@ -155,6 +155,7 @@ public class InformationActivity extends AppCompatActivity
     }
 
     private void changeOwnerVisibility() {
+        addFab.setVisibility(View.GONE);
         ownerInformation.setVisibility(View.GONE);
         ownerName.setVisibility(View.GONE);
         ownerSurname.setVisibility(View.GONE);
@@ -222,14 +223,14 @@ public class InformationActivity extends AppCompatActivity
             firebase.getDatabaseReference().child(path).setValue(pet);
         }
         new CustomToasts(this).shortToast("Successfully changed");
-        startAnotherActivity();
+        onBackPressed();
     }
 
-    private void startAnotherActivity() {
-        Intent intent = new Intent(this, CustomersActivity.class);
-        startActivity(intent);
-        finish();
-    }
+//    private void startAnotherActivity() {
+//        Intent intent = new Intent(this, CustomersActivity.class);
+//        startActivity(intent);
+//        finish();
+//    }
 
     private void hideShowOtherFabs() {
         if (smsFab.getVisibility() == View.VISIBLE) {
