@@ -13,6 +13,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -20,6 +22,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.CalendarView;
 import android.widget.EditText;
 
+import com.example.urbon.registrationapp.Firebase;
 import com.example.urbon.registrationapp.R;
 
 import java.text.ParseException;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity
     Intent intent;
     private Animation showRotateFab;
     private Animation hideRotateFab;
+    private Firebase firebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,8 @@ public class MainActivity extends AppCompatActivity
 
         showRotateFab = AnimationUtils.loadAnimation(this, R.anim.show_add_fab_button);
         hideRotateFab = AnimationUtils.loadAnimation(this, R.anim.hide_add_fab_button);
+
+        firebase = new Firebase(this);
     }
 
     private ActionBarDrawerToggle setUpDrawerToggle() {
@@ -81,8 +87,25 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.right_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        if(item.getItemId() == R.id.logOut){
+            firebase.signOut();
+            intent = new Intent(this, SigninActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+        //return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     private void setUpDrawerContent(NavigationView navigationView) {
@@ -154,5 +177,10 @@ public class MainActivity extends AppCompatActivity
         date.setText(selectedDate);
         AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }
