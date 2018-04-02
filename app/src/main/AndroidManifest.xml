@@ -22,6 +22,8 @@
         <activity
             android:name=".activities.InformationActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activities.RegisterOwnerActivity" />
+        <activity android:name=".activities.RegisterAnimalActivity" />
     </application>
 
 </manifest>

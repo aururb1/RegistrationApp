@@ -1,5 +1,6 @@
 package com.example.urbon.registrationapp.activities;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.example.urbon.registrationapp.Firebase;
@@ -18,12 +20,14 @@ import com.example.urbon.registrationapp.models.Pet;
 import com.example.urbon.registrationapp.utils.CustomToasts;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,8 +43,8 @@ public class RegisterPetActivity extends AppCompatActivity
     Toolbar toolbar;
     @BindView(R.id.petName)
     EditText petName;
-    @BindView(R.id.petAge)
-    EditText petAge;
+    @BindView(R.id.petBirth)
+    EditText petBirth;
     @BindView(R.id.petBreed)
     EditText petBreed;
     @BindView(R.id.petType)
@@ -61,6 +65,10 @@ public class RegisterPetActivity extends AppCompatActivity
 
     private Firebase firebase;
     private List<Owner> ownerList;
+    Calendar calendar;
+    DatePickerDialog.OnDateSetListener date;
+    Pet pet;
+    Owner owner;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,6 +80,7 @@ public class RegisterPetActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         save.setOnClickListener(this);
+        petBirth.setOnClickListener(this);
         firebase = new Firebase(this);
         setAddValueEventListener();
         ownerEmail.addTextChangedListener(new TextWatcher() {
@@ -82,9 +91,9 @@ public class RegisterPetActivity extends AppCompatActivity
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length() != 0){
-                    for(Owner owner: ownerList){
-                        if(owner.getEmail().equals(charSequence.toString())){
+                if (charSequence.length() != 0) {
+                    for (Owner owner : ownerList) {
+                        if (owner.getEmail().equals(charSequence.toString())) {
                             new CustomToasts(RegisterPetActivity.this).shortToast("customer founded: " + charSequence);
                         }
                     }
@@ -97,6 +106,23 @@ public class RegisterPetActivity extends AppCompatActivity
 
             }
         });
+
+        calendar = Calendar.getInstance();
+
+        date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+        pet = new Pet();
+        owner = new Owner();
     }
 
     @Override
@@ -105,26 +131,36 @@ public class RegisterPetActivity extends AppCompatActivity
         return true;
     }
 
+
     @Override
     public void onClick(View view) {
-        Pet pet = new Pet();
-        pet.setName(petName.getText().toString());
-        pet.setBreed(petBreed.getText().toString());
-        pet.setType(petType.getText().toString());
-        pet.setAge(Integer.parseInt(petAge.getText().toString()));
+        switch (view.getId()) {
+            case R.id.save:
+                validateInputs();
+                break;
+            case R.id.petBirth:
+                datePicker();
+                break;
+        }
 
-        List<Pet> pets = new ArrayList<>();
-        Owner owner = new Owner();
-        owner.setName(ownerName.getText().toString());
-        owner.setSurname(ownerSurname.getText().toString());
-        owner.setEmail(ownerEmail.getText().toString());
-        owner.setPhone(ownerPhone.getText().toString());
-        owner.setAddress(ownerAddress.getText().toString());
-        pets.add(pet);
-        owner.setPets(pets);
-        firebase.getDatabaseReference().child(firebase.getDatabaseReference().push().getKey()).setValue(owner);
-        new CustomToasts(this).shortToast("customer added: " + owner.getName());
-        startAnotherActivity();
+
+//        pet.setName(petName.getText().toString());
+//        pet.setBreed(petBreed.getText().toString());
+//        pet.setType(petType.getText().toString());
+//        pet.setAge(Integer.parseInt(petBirth.getText().toString()));
+
+//        List<Pet> pets = new ArrayList<>();
+//        Owner owner = new Owner();
+//        owner.setName(ownerName.getText().toString());
+//        owner.setSurname(ownerSurname.getText().toString());
+//        owner.setEmail(ownerEmail.getText().toString());
+//        owner.setPhone(ownerPhone.getText().toString());
+//        owner.setAddress(ownerAddress.getText().toString());
+//        pets.add(pet);
+//        owner.setPets(pets);
+//        firebase.getDatabaseReference().child(firebase.getDatabaseReference().push().getKey()).setValue(owner);
+//        new CustomToasts(this).shortToast("customer added: " + owner.getName());
+//        startAnotherActivity();
     }
 
     private void startAnotherActivity() {
@@ -153,5 +189,75 @@ public class RegisterPetActivity extends AppCompatActivity
             owner = children.getValue(Owner.class);
             ownerList.add(owner);
         }
+    }
+
+
+    private void updateLabel() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd", Locale.US);
+        petBirth.setText(sdf.format(calendar.getTime()));
+        petBirth.setError(null);
+    }
+
+    private void validateInputs() {
+        validatePetInputs();
+        validateOwnerInputs();
+    }
+
+    private void validatePetInputs(){
+        if (petName.getText().toString().isEmpty()) {
+            petName.setError("Empty field!");
+        } else {
+            pet.setName(petName.getText().toString());
+        }
+        if (petType.getText().toString().isEmpty()) {
+            petType.setError("Empty field!");
+        } else {
+            pet.setType(petType.getText().toString());
+        }
+        if (petBreed.getText().toString().isEmpty()) {
+            petBreed.setError("Empty field!");
+        } else {
+            pet.setBreed(petBreed.getText().toString());
+        }
+        if (petBirth.getText().toString().isEmpty()) {
+            petBirth.setError("Empty field!");
+        } else {
+            pet.setBirth(new Date());
+        }
+    }
+
+    private void validateOwnerInputs(){
+        if (ownerName.getText().toString().isEmpty()) {
+            ownerName.setError("Empty field!");
+        } else {
+            owner.setName(ownerName.getText().toString());
+        }
+        if (ownerSurname.getText().toString().isEmpty()) {
+            ownerSurname.setError("Empty field!");
+        } else {
+            owner.setSurname(ownerSurname.getText().toString());
+        }
+        if (ownerPhone.getText().toString().isEmpty()) {
+            ownerPhone.setError("Empty field!");
+        } else {
+            owner.setPhone(ownerPhone.getText().toString());
+        }
+        if (ownerEmail.getText().toString().isEmpty()) {
+            ownerEmail.setError("Empty field!");
+        } else {
+            owner.setEmail(ownerEmail.getText().toString());
+        }
+        if (ownerAddress.getText().toString().isEmpty()) {
+            ownerAddress.setError("Empty field!");
+        } else {
+            owner.setAddress(ownerAddress.getText().toString());
+        }
+    }
+
+    private void datePicker() {
+        new DatePickerDialog(RegisterPetActivity.this,
+                date,
+                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 }

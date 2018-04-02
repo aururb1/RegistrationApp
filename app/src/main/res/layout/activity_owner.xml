@@ -20,66 +20,6 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/petInformation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/pet_information"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/petName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/petInformation"
-                tools:ignore="LabelFor" />
-
-            <EditText
-                android:id="@+id/petType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/petName"
-                tools:ignore="LabelFor" />
-
-            <EditText
-                android:id="@+id/petBreed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/petType"
-                tools:ignore="LabelFor" />
-
-            <EditText
-                android:id="@+id/petBirth"
-                android:focusable="false"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:inputType="date"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/petBreed"
-                tools:ignore="LabelFor" />
-
-            <TextView
                 android:id="@+id/ownerInformation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,7 +28,7 @@
                 android:text="@string/owner_information"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/petBirth" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/ownerName"
@@ -150,65 +90,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/ownerEmail"
                 tools:ignore="LabelFor" />
 
-            <Button
-                android:id="@+id/save"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/save"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ownerAddress" />
-
-            <TextView
-                android:id="@+id/namePetText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/name"
-                app:layout_constraintEnd_toStartOf="@+id/petName"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/petInformation" />
-
-            <TextView
-                android:id="@+id/petTypeText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:text="@string/type"
-                app:layout_constraintEnd_toStartOf="@+id/petType"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/namePetText" />
-
-            <TextView
-                android:id="@+id/petAgeText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="36dp"
-                android:text="@string/birth"
-                app:layout_constraintEnd_toStartOf="@+id/petBirth"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/petBreedText" />
-
-            <TextView
-                android:id="@+id/petBreedText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="36dp"
-                android:text="@string/breed"
-                app:layout_constraintEnd_toStartOf="@+id/petBreed"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/petTypeText" />
-
             <TextView
                 android:id="@+id/ownerNameText"
                 android:layout_width="0dp"
@@ -266,6 +147,17 @@
                 app:layout_constraintHorizontal_bias="0.629"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ownerEmailText" />
+
+            <Button
+                android:id="@+id/save"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/next"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ownerAddress" />
 
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>

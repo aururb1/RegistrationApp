@@ -6,7 +6,7 @@
     <string name="pet_information">Pet information</string>
     <string name="name">Name</string>
     <string name="breed">Breed</string>
-    <string name="age">Age</string>
+    <string name="birth">Birth</string>
     <string name="owner_information">Owner information</string>
     <string name="surname">Surname</string>
     <string name="phone">Phone</string>
@@ -25,4 +25,6 @@
     <string name="no_phone_call">There is no app that support phone call</string>
     <string name="no_sms_sending">There is no app that support sms sending</string>
     <string name="no_email_sending">There is no app that support email sending</string>
+    <string name="next">next</string>
+    <string name="register_owner">Register owner</string>
 </resources>

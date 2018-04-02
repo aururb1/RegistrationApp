@@ -22,6 +22,8 @@ import com.example.urbon.registrationapp.models.Pet;
 import com.example.urbon.registrationapp.utils.CustomToasts;
 import com.google.gson.Gson;
 
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -38,7 +40,7 @@ public class InformationActivity extends AppCompatActivity
     TextView petInformation;
     @BindView(R.id.petName)
     EditText petName;
-    @BindView(R.id.petAge)
+    @BindView(R.id.petBirth)
     EditText petAge;
     @BindView(R.id.petBreed)
     EditText petBreed;
@@ -182,7 +184,7 @@ public class InformationActivity extends AppCompatActivity
         petName.setText(pet.getName());
         petType.setText(pet.getType());
         petBreed.setText(pet.getBreed());
-        petAge.setText(String.valueOf(pet.getAge()));
+        petAge.setText(String.valueOf(pet.getBirth()));
     }
 
     @Override
@@ -219,7 +221,7 @@ public class InformationActivity extends AppCompatActivity
             pet.setName(petName.getText().toString());
             pet.setBreed(petBreed.getText().toString());
             pet.setType(petType.getText().toString());
-            pet.setAge(Integer.parseInt(petAge.getText().toString()));
+            pet.setBirth(new Date());
             firebase.getDatabaseReference().child(path).setValue(pet);
         }
         new CustomToasts(this).shortToast("Successfully changed");

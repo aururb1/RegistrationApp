@@ -67,7 +67,7 @@
                 tools:ignore="LabelFor" />
 
             <EditText
-                android:id="@+id/petAge"
+                android:id="@+id/petBirth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -87,7 +87,7 @@
                 android:text="@string/owner_information"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/petAge" />
+                app:layout_constraintTop_toBottomOf="@+id/petBirth" />
 
             <EditText
                 android:id="@+id/ownerName"
@@ -191,8 +191,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="36dp"
-                android:text="@string/age"
-                app:layout_constraintEnd_toStartOf="@+id/petAge"
+                android:text="@string/birth"
+                app:layout_constraintEnd_toStartOf="@+id/petBirth"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/petBreedText" />

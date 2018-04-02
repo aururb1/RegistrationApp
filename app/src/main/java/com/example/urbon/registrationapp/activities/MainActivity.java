@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity
     private void selectDrawerItem(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.registerPet:
-                intent = new Intent(this, RegisterPetActivity.class);
+                intent = new Intent(this, RegisterOwnerActivity.class);
                 startActivity(intent);
                 break;
             case R.id.customers:

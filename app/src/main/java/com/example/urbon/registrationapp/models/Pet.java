@@ -1,5 +1,7 @@
 package com.example.urbon.registrationapp.models;
 
+import java.util.Date;
+
 /**
  * Created by urbon on 2/7/2018.
  */
@@ -7,7 +9,7 @@ package com.example.urbon.registrationapp.models;
 public class Pet {
     private String name;
     private String type;
-    private Integer age;
+    private Date birth;
     private String breed;
 
     public String getName() {
@@ -26,12 +28,12 @@ public class Pet {
         this.type = type;
     }
 
-    public Integer getAge() {
-        return age;
+    public Date getBirth() {
+        return birth;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setBirth(Date birth) {
+        this.birth = birth;
     }
 
     public String getBreed() {
