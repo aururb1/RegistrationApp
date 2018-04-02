@@ -22,6 +22,7 @@ import com.example.urbon.registrationapp.utils.CustomToasts;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -117,6 +118,9 @@ public class RegisterAnimalActivity extends AppCompatActivity
             owner.getPets().add(pet);
             firebase.getDatabaseReference().child(path).setValue(owner);
         } else {
+            List<Pet> pets = new ArrayList<>();
+            pets.add(pet);
+            owner.setPets(pets);
             firebase.getDatabaseReference().child(firebase.getDatabaseReference().push().getKey()).setValue(owner);
         }
 
