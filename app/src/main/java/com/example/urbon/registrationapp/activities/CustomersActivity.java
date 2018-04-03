@@ -104,15 +104,14 @@ public class CustomersActivity extends AppCompatActivity implements FlexibleAdap
         for (DataSnapshot children : dataSnapshot.getChildren()) {
             owner = children.getValue(Owner.class);
             HeaderItem header = new HeaderItem(owner, children.getKey());
-            for (int i = 0; i < owner.getPets().size(); i++) {
-                SectionItem sectionItem = new SectionItem(header, owner.getPets().get(i), children.getKey() + "/pets/" + i);
-                newItems.add(sectionItem);
+            if (owner.getPets() != null) {
+                for (int i = 0; i < owner.getPets().size(); i++) {
+                    SectionItem sectionItem = new SectionItem(header, owner.getPets().get(i), children.getKey() + "/pets/" + i);
+                    newItems.add(sectionItem);
+                }
+            } else {
+                newItems.add(header);
             }
-//            for (Pet pet : owner.getPets()) {
-//                SectionItem sectionItem = new SectionItem(header, pet, children.getKey());
-//                newItems.add(sectionItem);
-//            }
-
         }
         adapter.onLoadMoreComplete(newItems);
     }

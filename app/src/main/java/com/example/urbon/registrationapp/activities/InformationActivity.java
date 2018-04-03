@@ -1,12 +1,18 @@
 package com.example.urbon.registrationapp.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -22,6 +28,7 @@ import com.example.urbon.registrationapp.models.Pet;
 import com.example.urbon.registrationapp.utils.CustomToasts;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -95,6 +102,7 @@ public class InformationActivity extends AppCompatActivity
     private Animation hideAddFabButton;
     private Animation showFabButtons;
     private Animation hideFabButtons;
+    private CustomToasts toasts;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,6 +129,7 @@ public class InformationActivity extends AppCompatActivity
         hideFabButtons = AnimationUtils.loadAnimation(this, R.anim.hide_fab_buttons);
 
         firebase = new Firebase(this);
+        toasts = new CustomToasts(this);
     }
 
     @Override
@@ -128,6 +137,40 @@ public class InformationActivity extends AppCompatActivity
         onBackPressed();
         finish();
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.information_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.delete) {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+            dialogBuilder
+                    .setTitle(R.string.delete_item)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            firebase.getDatabaseReference().child(path).removeValue();
+                            toasts.longToast(getString(R.string.successfully_deleted));
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+            AlertDialog alertDialog = dialogBuilder.create();
+            alertDialog.show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void getDataFromIntent(Intent intent) {
@@ -224,15 +267,9 @@ public class InformationActivity extends AppCompatActivity
             pet.setBirth(new Date());
             firebase.getDatabaseReference().child(path).setValue(pet);
         }
-        new CustomToasts(this).shortToast("Successfully changed");
+        toasts.shortToast("Successfully changed");
         onBackPressed();
     }
-
-//    private void startAnotherActivity() {
-//        Intent intent = new Intent(this, CustomersActivity.class);
-//        startActivity(intent);
-//        finish();
-//    }
 
     private void hideShowOtherFabs() {
         if (smsFab.getVisibility() == View.VISIBLE) {

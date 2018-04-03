@@ -16,7 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.RegisterPetActivity" />
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.CustomersActivity" />
         <activity

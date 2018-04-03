@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        if(item.getItemId() == R.id.logOut){
+        if (item.getItemId() == R.id.logOut) {
             firebase.signOut();
             intent = new Intent(this, SigninActivity.class);
             startActivity(intent);

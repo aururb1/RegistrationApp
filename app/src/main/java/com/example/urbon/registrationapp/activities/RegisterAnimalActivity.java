@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
  */
 
 public class RegisterAnimalActivity extends AppCompatActivity
-        implements View.OnClickListener{
+        implements View.OnClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -58,6 +58,7 @@ public class RegisterAnimalActivity extends AppCompatActivity
     private Calendar calendar;
     private DatePickerDialog.OnDateSetListener date;
     private String path;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +103,7 @@ public class RegisterAnimalActivity extends AppCompatActivity
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.save:
-                if(validatePetInputs()){
+                if (validatePetInputs()) {
                     addNewPet();
                     startAnotherActivity();
                 }
@@ -113,8 +114,8 @@ public class RegisterAnimalActivity extends AppCompatActivity
         }
     }
 
-    private void addNewPet(){
-        if(path!=null){
+    private void addNewPet() {
+        if (path != null) {
             owner.getPets().add(pet);
             firebase.getDatabaseReference().child(path).setValue(owner);
         } else {
@@ -132,7 +133,7 @@ public class RegisterAnimalActivity extends AppCompatActivity
         finish();
     }
 
-    private boolean validatePetInputs(){
+    private boolean validatePetInputs() {
         boolean isValid = true;
         if (petName.getText().toString().isEmpty()) {
             petName.setError("Empty field!");

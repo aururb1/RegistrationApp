@@ -28,4 +28,12 @@
     <string name="next">next</string>
     <string name="register_owner">Register owner</string>
     <string name="log_out">Log out</string>
+    <string name="delete">delete</string>
+    <string name="delete_item">Are you sure want to delete this item?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="successfully_deleted">item successfully deleted</string>
+    <string name="same_phone">Exist same owner with same phone:</string>
+    <string name="same_email">Exist same owner with same email:</string>
+    <string name="same_surname_name">Exist same owner with same name, surname:</string>
 </resources>

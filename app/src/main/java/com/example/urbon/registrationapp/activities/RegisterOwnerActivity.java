@@ -54,6 +54,7 @@ public class RegisterOwnerActivity extends AppCompatActivity
     private Owner owner;
     private String path;
     private LinkedHashMap<String, Owner> linkedHashMap = new LinkedHashMap<>();
+    private CustomToasts toasts;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class RegisterOwnerActivity extends AppCompatActivity
         next.setOnClickListener(this);
         owner = new Owner();
         firebase = new Firebase(this);
+        toasts = new CustomToasts(this);
         setAddValueEventListener();
     }
 
@@ -150,18 +152,18 @@ public class RegisterOwnerActivity extends AppCompatActivity
     }
 
     private void searchExistingOwner() {
-        for(Map.Entry<String, Owner> ownerEntry : linkedHashMap.entrySet()){
+        for (Map.Entry<String, Owner> ownerEntry : linkedHashMap.entrySet()) {
             if (owner.getName().equals(ownerEntry.getValue().getName()) && owner.getSurname().equals(ownerEntry.getValue().getSurname())) {
-                new CustomToasts(this).longToast("Exist same owner with same name, surname: " + owner.getName());
+                toasts.longToast(getString(R.string.same_surname_name) + owner.getName());
                 owner = ownerEntry.getValue();
                 path = ownerEntry.getKey();
                 break;
             } else if (owner.getEmail().equals(ownerEntry.getValue().getEmail())) {
-                new CustomToasts(this).longToast("Exist same owner with same email: " + owner.getEmail());
+                toasts.longToast(getString(R.string.same_email) + owner.getEmail());
                 path = ownerEntry.getKey();
                 break;
             } else if (owner.getPhone().equals(ownerEntry.getValue().getPhone())) {
-                new CustomToasts(this).longToast("Exist same owner with same phone: " + owner.getPhone());
+                toasts.longToast(getString(R.string.same_phone) + owner.getPhone());
                 path = ownerEntry.getKey();
                 break;
             }
