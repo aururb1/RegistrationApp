@@ -33,7 +33,7 @@
     <string name="ok">OK</string>
     <string name="cancel">CANCEL</string>
     <string name="successfully_deleted">item successfully deleted</string>
-    <string name="same_phone">Exist same owner with same phone:</string>
-    <string name="same_email">Exist same owner with same email:</string>
-    <string name="same_surname_name">Exist same owner with same name, surname:</string>
+    <string name="same_phone">Exist same owner with same phone: %s</string>
+    <string name="same_email">Exist same owner with same email: %s</string>
+    <string name="same_surname_name">Exist same owner with same name and surname: %1$s, %2$s</string>
 </resources>

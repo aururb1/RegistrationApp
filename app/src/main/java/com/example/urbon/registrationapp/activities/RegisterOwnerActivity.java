@@ -1,8 +1,10 @@
 package com.example.urbon.registrationapp.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -82,7 +84,6 @@ public class RegisterOwnerActivity extends AppCompatActivity
     public void onClick(View view) {
         if (validateOwnerInputs()) {
             searchExistingOwner();
-            startAnotherActivity();
         }
     }
 
@@ -91,7 +92,6 @@ public class RegisterOwnerActivity extends AppCompatActivity
         intent.putExtra(Const.OWNER, new Gson().toJson(owner));
         intent.putExtra(Const.PATH, path);
         startActivity(intent);
-        //finish();
     }
 
     private void setAddValueEventListener() {
@@ -154,19 +154,32 @@ public class RegisterOwnerActivity extends AppCompatActivity
     private void searchExistingOwner() {
         for (Map.Entry<String, Owner> ownerEntry : linkedHashMap.entrySet()) {
             if (owner.getName().equals(ownerEntry.getValue().getName()) && owner.getSurname().equals(ownerEntry.getValue().getSurname())) {
-                toasts.longToast(getString(R.string.same_surname_name) + owner.getName());
-                owner = ownerEntry.getValue();
-                path = ownerEntry.getKey();
+                confirmDialog(getString(R.string.same_surname_name, owner.getName(), owner.getSurname()), ownerEntry.getValue(), ownerEntry.getKey());
                 break;
             } else if (owner.getEmail().equals(ownerEntry.getValue().getEmail())) {
-                toasts.longToast(getString(R.string.same_email) + owner.getEmail());
-                path = ownerEntry.getKey();
+                confirmDialog(getString(R.string.same_email, owner.getEmail()), ownerEntry.getValue(), ownerEntry.getKey());
                 break;
             } else if (owner.getPhone().equals(ownerEntry.getValue().getPhone())) {
-                toasts.longToast(getString(R.string.same_phone) + owner.getPhone());
-                path = ownerEntry.getKey();
+                confirmDialog(getString(R.string.same_phone, owner.getPhone()), ownerEntry.getValue(), ownerEntry.getKey());
                 break;
             }
         }
+    }
+
+    private void confirmDialog(String title, final Owner existingOwner, final String ownerPath) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder
+                .setTitle(title)
+                .setCancelable(false)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        owner = existingOwner;
+                        path = ownerPath;
+                        startAnotherActivity();
+                    }
+                });
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
     }
 }

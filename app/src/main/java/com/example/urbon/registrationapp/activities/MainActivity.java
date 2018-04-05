@@ -129,8 +129,6 @@ public class MainActivity extends AppCompatActivity
                 intent = new Intent(this, CustomersActivity.class);
                 startActivity(intent);
                 break;
-//            case R.id.nav_third_fragment:
-//                break;
         }
         drawerLayout.closeDrawers();
     }
