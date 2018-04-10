@@ -3,14 +3,10 @@ package com.example.urbon.registrationapp.activities;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -21,7 +17,6 @@ import com.example.urbon.registrationapp.R;
 import com.example.urbon.registrationapp.models.Owner;
 import com.example.urbon.registrationapp.models.Pet;
 import com.example.urbon.registrationapp.utils.Const;
-import com.example.urbon.registrationapp.utils.CustomToasts;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
@@ -73,7 +68,6 @@ public class RegisterAnimalActivity extends AppCompatActivity
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         save.setOnClickListener(this);
         petBirth.setOnClickListener(this);
-        petBirth.setOnClickListener(this);
         firebase = new Firebase(this);
         Intent intent = getIntent();
         path = intent.getStringExtra(Const.PATH);
@@ -120,12 +114,12 @@ public class RegisterAnimalActivity extends AppCompatActivity
     private void addNewPet() {
         if (path != null) {
             owner.getPets().add(pet);
-            firebase.getDatabaseReference().child(path).setValue(owner);
+            firebase.getDatabaseReferenceOwners().child(path).setValue(owner);
         } else {
             List<Pet> pets = new ArrayList<>();
             pets.add(pet);
             owner.setPets(pets);
-            firebase.getDatabaseReference().child(firebase.getDatabaseReference().push().getKey()).setValue(owner);
+            firebase.getDatabaseReferenceOwners().child(firebase.getDatabaseReferenceOwners().push().getKey()).setValue(owner);
         }
 
     }

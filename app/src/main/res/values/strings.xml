@@ -36,4 +36,8 @@
     <string name="same_phone">Exist same owner with same phone: %s</string>
     <string name="same_email">Exist same owner with same email: %s</string>
     <string name="same_surname_name">Exist same owner with same name and surname: %1$s, %2$s</string>
+    <string name="customer_name">Customer name</string>
+    <string name="pet_name">Pet name</string>
+    <string name="hour">Hour</string>
+    <string name="date">date</string>
 </resources>

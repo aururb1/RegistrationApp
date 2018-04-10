@@ -9,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,7 +27,6 @@ import com.example.urbon.registrationapp.models.Pet;
 import com.example.urbon.registrationapp.utils.CustomToasts;
 import com.google.gson.Gson;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -55,7 +53,7 @@ public class InformationActivity extends AppCompatActivity
     EditText petType;
     @BindView(R.id.ownerInformation)
     TextView ownerInformation;
-    @BindView(R.id.ownerName)
+    @BindView(R.id.hour)
     EditText ownerName;
     @BindView(R.id.ownerSurname)
     EditText ownerSurname;
@@ -156,7 +154,7 @@ public class InformationActivity extends AppCompatActivity
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-                            firebase.getDatabaseReference().child(path).removeValue();
+                            firebase.getDatabaseReferenceOwners().child(path).removeValue();
                             toasts.longToast(getString(R.string.successfully_deleted));
                             finish();
                         }
@@ -258,14 +256,14 @@ public class InformationActivity extends AppCompatActivity
             owner.setEmail(ownerEmail.getText().toString());
             owner.setPhone(ownerPhone.getText().toString());
             owner.setAddress(ownerAddress.getText().toString());
-            firebase.getDatabaseReference().child(path).setValue(owner);
+            firebase.getDatabaseReferenceOwners().child(path).setValue(owner);
 
         } else {
             pet.setName(petName.getText().toString());
             pet.setBreed(petBreed.getText().toString());
             pet.setType(petType.getText().toString());
             pet.setBirth(new Date());
-            firebase.getDatabaseReference().child(path).setValue(pet);
+            firebase.getDatabaseReferenceOwners().child(path).setValue(pet);
         }
         toasts.shortToast("Successfully changed");
         onBackPressed();

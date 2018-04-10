@@ -38,7 +38,7 @@ public class RegisterOwnerActivity extends AppCompatActivity
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.ownerName)
+    @BindView(R.id.hour)
     EditText ownerName;
     @BindView(R.id.ownerSurname)
     EditText ownerSurname;
@@ -84,6 +84,7 @@ public class RegisterOwnerActivity extends AppCompatActivity
     public void onClick(View view) {
         if (validateOwnerInputs()) {
             searchExistingOwner();
+            startAnotherActivity();
         }
     }
 
@@ -95,7 +96,7 @@ public class RegisterOwnerActivity extends AppCompatActivity
     }
 
     private void setAddValueEventListener() {
-        firebase.getDatabaseReference().addValueEventListener(new ValueEventListener() {
+        firebase.getDatabaseReferenceOwners().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 showData(dataSnapshot);
@@ -176,7 +177,7 @@ public class RegisterOwnerActivity extends AppCompatActivity
                     public void onClick(DialogInterface dialog, int id) {
                         owner = existingOwner;
                         path = ownerPath;
-                        startAnotherActivity();
+//                        startAnotherActivity();
                     }
                 });
         AlertDialog alertDialog = dialogBuilder.create();

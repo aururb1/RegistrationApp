@@ -23,14 +23,16 @@ public class Firebase {
     private FirebaseUser currentUser;
     private CustomToasts toasts;
     private ProgressDialog progressDialog;
-    DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceOwners;
+    private DatabaseReference databaseReferenceCalendar;
 
     public Firebase(Activity activity) {
         auth = FirebaseAuth.getInstance();
         this.activity = activity;
         currentUser = auth.getCurrentUser();
         toasts = new CustomToasts(activity);
-        databaseReference = FirebaseDatabase.getInstance().getReference("z5bKBNMQj2POjbcEKjkeJ1AgOUJ3/owners");
+        databaseReferenceOwners = FirebaseDatabase.getInstance().getReference("z5bKBNMQj2POjbcEKjkeJ1AgOUJ3/owners");
+        databaseReferenceCalendar = FirebaseDatabase.getInstance().getReference("z5bKBNMQj2POjbcEKjkeJ1AgOUJ3/calendar");
     }
 
     public void signIn(String email, String password) {
@@ -61,8 +63,12 @@ public class Firebase {
         return auth;
     }
 
-    public DatabaseReference getDatabaseReference() {
-        return databaseReference;
+    public DatabaseReference getDatabaseReferenceOwners() {
+        return databaseReferenceOwners;
+    }
+
+    public DatabaseReference getDatabaseReferenceCalendar() {
+        return databaseReferenceCalendar;
     }
 
     private void showProgressDialog() {

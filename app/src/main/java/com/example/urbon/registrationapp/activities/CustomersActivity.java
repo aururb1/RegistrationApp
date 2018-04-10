@@ -18,7 +18,6 @@ import com.example.urbon.registrationapp.R;
 import com.example.urbon.registrationapp.items.HeaderItem;
 import com.example.urbon.registrationapp.items.SectionItem;
 import com.example.urbon.registrationapp.models.Owner;
-import com.example.urbon.registrationapp.models.Pet;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -71,7 +70,7 @@ public class CustomersActivity extends AppCompatActivity implements FlexibleAdap
     }
 
     private void setAddValueEventListener() {
-        firebase.getDatabaseReference().addValueEventListener(new ValueEventListener() {
+        firebase.getDatabaseReferenceOwners().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 hideProgressBar();
