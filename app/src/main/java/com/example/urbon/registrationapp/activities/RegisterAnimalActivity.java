@@ -154,13 +154,13 @@ public class RegisterAnimalActivity extends AppCompatActivity
             petBirth.setError("Empty field!");
             isValid = false;
         } else {
-            pet.setBirth(new Date());
+            pet.setBirth(petBirth.getText().toString());
         }
         return isValid;
     }
 
     private void updateLabel() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         petBirth.setText(sdf.format(calendar.getTime()));
         petBirth.setError(null);
     }

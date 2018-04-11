@@ -9,7 +9,7 @@ import java.util.Date;
 public class Pet {
     private String name;
     private String type;
-    private Date birth;
+    private String birth;
     private String breed;
 
     public String getName() {
@@ -28,11 +28,11 @@ public class Pet {
         this.type = type;
     }
 
-    public Date getBirth() {
+    public String getBirth() {
         return birth;
     }
 
-    public void setBirth(Date birth) {
+    public void setBirth(String birth) {
         this.birth = birth;
     }
 

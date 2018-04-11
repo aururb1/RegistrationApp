@@ -51,12 +51,9 @@ public class RegisterOwnerActivity extends AppCompatActivity
     @BindView(R.id.save)
     Button next;
 
-    private Firebase firebase;
-    private List<Owner> ownerList;
     private Owner owner;
     private String path;
     private LinkedHashMap<String, Owner> linkedHashMap = new LinkedHashMap<>();
-    private CustomToasts toasts;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,9 +66,8 @@ public class RegisterOwnerActivity extends AppCompatActivity
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         next.setOnClickListener(this);
         owner = new Owner();
-        firebase = new Firebase(this);
-        toasts = new CustomToasts(this);
-        setAddValueEventListener();
+//        firebase = new Firebase(this);
+//        toasts = new CustomToasts(this);
     }
 
     @Override
@@ -93,28 +89,6 @@ public class RegisterOwnerActivity extends AppCompatActivity
         intent.putExtra(Const.OWNER, new Gson().toJson(owner));
         intent.putExtra(Const.PATH, path);
         startActivity(intent);
-    }
-
-    private void setAddValueEventListener() {
-        firebase.getDatabaseReferenceOwners().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                showData(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
-
-    private void showData(DataSnapshot dataSnapshot) {
-        ownerList = new ArrayList<>();
-        Owner owner;
-        for (DataSnapshot children : dataSnapshot.getChildren()) {
-            owner = children.getValue(Owner.class);
-            linkedHashMap.put(children.getKey(), owner);
-        }
     }
 
     private boolean validateOwnerInputs() {
