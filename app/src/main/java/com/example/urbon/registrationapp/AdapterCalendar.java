@@ -53,6 +53,10 @@ public class AdapterCalendar extends RecyclerView.Adapter<AdapterCalendar.MyView
 
     @Override
     public int getItemCount() {
-        return hourList.size();
+        if (hourList == null) {
+            return 0;
+        } else {
+            return hourList.size();
+        }
     }
 }

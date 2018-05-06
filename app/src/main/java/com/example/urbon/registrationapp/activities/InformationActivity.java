@@ -20,12 +20,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.urbon.registrationapp.Firebase;
+import com.example.urbon.registrationapp.MyApplication;
 import com.example.urbon.registrationapp.utils.Const;
 import com.example.urbon.registrationapp.R;
 import com.example.urbon.registrationapp.models.Owner;
 import com.example.urbon.registrationapp.models.Pet;
 import com.example.urbon.registrationapp.utils.CustomToasts;
 import com.google.gson.Gson;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,13 +101,15 @@ public class InformationActivity extends AppCompatActivity
     private Animation hideAddFabButton;
     private Animation showFabButtons;
     private Animation hideFabButtons;
-    private CustomToasts toasts;
+    @Inject CustomToasts toasts;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
-
+        ((MyApplication) getApplication())
+                .getMyComponent()
+                .inject(this);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         setTitle(getString(R.string.information));
@@ -125,7 +130,7 @@ public class InformationActivity extends AppCompatActivity
         hideFabButtons = AnimationUtils.loadAnimation(this, R.anim.hide_fab_buttons);
 
         firebase = new Firebase(this);
-        toasts = new CustomToasts(this);
+//        toasts = new CustomToasts(this);
     }
 
     @Override

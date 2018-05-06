@@ -41,6 +41,9 @@ dependencies {
 
     // Using MavenSnapshots repository for continuous updates from my development
     compile 'eu.davidea:flexible-adapter:5.0.0-SNAPSHOT'
+
+    compile  'com.google.dagger:dagger:2.15'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.15'
 }
 
 

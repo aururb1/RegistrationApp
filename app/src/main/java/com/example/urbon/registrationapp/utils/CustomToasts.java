@@ -1,6 +1,6 @@
 package com.example.urbon.registrationapp.utils;
 
-import android.app.Activity;
+import android.content.Context;
 import android.widget.Toast;
 
 /**
@@ -9,17 +9,17 @@ import android.widget.Toast;
 
 public class CustomToasts {
 
-    Activity activity;
+    Context context;
 
-    public CustomToasts(Activity activity) {
-        this.activity = activity;
+    public CustomToasts(Context context) {
+        this.context = context;
     }
 
     public void shortToast(String text){
-        Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 
     public void longToast(String text){
-        Toast.makeText(activity, text, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
 }
